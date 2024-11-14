@@ -1,11 +1,11 @@
 // TwoFactorPage.js
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';  // Импортируем useNavigate
+import { useNavigate } from 'react-router-dom';  
 
 function TwoFactorPage({ questions, userId }) {
   const [answers, setAnswers] = useState({});
-  const navigate = useNavigate();  // Хук для навигации
+  const navigate = useNavigate();  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -13,13 +13,13 @@ function TwoFactorPage({ questions, userId }) {
       const response = await axios.post('http://localhost:5000/verify-answers', {
         userId,
         answers: questions.map((question, index) => ({
-          questionId: question.id,  // Передаем id вопроса для проверки
+          questionId: question.id,  
           value: answers[`answer${index + 1}`]
         })),
       });
       if (response.data.message === '2FA successful') {
         alert('Login successful');
-        navigate('/empty');  // Перенаправление на пустую страницу после успешной верификации
+        navigate('/empty');  
       } else {
         alert('Incorrect answers');
       }
@@ -31,7 +31,7 @@ function TwoFactorPage({ questions, userId }) {
   return (
     <form onSubmit={handleSubmit}>
       {questions.map((question, index) => (
-        <div key={question.id}>  {/* Используем id вопроса как уникальный ключ */}
+        <div key={question.id}>  {}
           <label>{question.question}</label>
           <input
             type="text"

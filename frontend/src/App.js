@@ -1,6 +1,6 @@
 // App.js
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';  // Импортируем необходимые компоненты для роутинга
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; 
 import LoginPage from './LoginPage';
 import TwoFactorPage from './TwoFactorPage';
 

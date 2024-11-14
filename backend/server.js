@@ -34,7 +34,7 @@ app.post('/login', async (req, res) => {
       'SELECT id, question FROM security_questions ORDER BY RANDOM() LIMIT 3'
     );
 
-    res.json({ token, userId, questions: questions.rows });  // Возвращаем id и текст вопросов
+    res.json({ token, userId, questions: questions.rows });  
   } catch (error) {
     console.error('Database error:', error);
     res.status(500).json({ message: 'Internal server error' });
@@ -45,7 +45,6 @@ app.post('/verify-answers', async (req, res) => {
   const { userId, answers } = req.body;
 
   try {
-    // Получаем ответы пользователя на вопросы
     const userAnswers = await pool.query(
       'SELECT question1_id, answer1, question2_id, answer2, question3_id, answer3, question4_id, answer4, question5_id, answer5, question6_id, answer6 FROM user_data WHERE user_id = $1',
       [userId]
@@ -55,10 +54,9 @@ app.post('/verify-answers', async (req, res) => {
       return res.status(404).json({ message: 'User data not found' });
     }
 
-    // Проверяем каждый ответ пользователя на соответствие
     const validAnswers = answers.every(answer => {
-      const answerIndex = `answer${answer.questionId}`; // Например, answer1, answer2, ...
-      const questionIndex = `question${answer.questionId}_id`; // Например, question1_id, question2_id, ...
+      const answerIndex = `answer${answer.questionId}`; 
+      const questionIndex = `question${answer.questionId}_id`; 
       
       const correctAnswer = userAnswers.rows[0][answerIndex];
       return correctAnswer && correctAnswer.toLowerCase() === answer.value.toLowerCase();
